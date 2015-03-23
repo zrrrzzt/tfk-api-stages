@@ -3,7 +3,13 @@
 var mongojs = require('mongojs');
 var config = require('./config');
 var db = mongojs(config.DB);
-var stages = require('./test/data/stages.json');
+var stages = db.collection('stages');
+var stagesDocument = require('./test/data/stages.json');
+var textIndexFields = {
+  "S_NAME,C,40": "text",
+  "S_SHORT_NA,C,5": "text",
+  "S_SHORT_N2,C,12": "text"
+};
 
 function handleCallback(error, data) {
   if (error) {
@@ -27,6 +33,12 @@ function addDocument(options, callback) {
 
 db.createCollection('stages', handleCallback);
 
-addDocument({collection:'stages', document:stages}, handleCallback);
+stages.ensureIndex(textIndexFields, {"default_language": "nb"}, function(err, data){
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(data)
+  }
+});
 
-//TODO: Add indexes
+addDocument({collection:'stages', document:stagesDocument}, handleCallback);
