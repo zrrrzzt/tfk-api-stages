@@ -4,7 +4,7 @@ API for all stages in Telemark
 ## Installation
 
 ```
-$ it clone git@github.com:zrrrzzt/tfk-api-stages.git
+$ git clone git@github.com:zrrrzzt/tfk-api-stages.git
 ```
 
 ## Setup
