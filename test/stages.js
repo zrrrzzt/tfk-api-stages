@@ -46,4 +46,14 @@ describe('stages', function() {
     });
   });
 
+  describe('GET /stages/closest', function() {
+    it('responds with json', function(done) {
+      wreck
+        .get('/stages/closest?x=534969.4&y=6564263.3')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, done);
+    });
+  });
+
 });

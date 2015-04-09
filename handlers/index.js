@@ -1,10 +1,21 @@
 'use strict';
 
 var mongojs = require('mongojs');
+var Wreck = require('wreck');
+var querystring = require('querystring');
 var helpers = require('../helpers');
 var config = require('../config');
 var db = mongojs(config.DB);
 var stages = db.collection('stages');
+
+function handleReply(err, data, request, reply) {
+  if (err) {
+    console.error(err);
+    reply(err);
+  } else {
+    reply(JSON.parse(data));
+  }
+}
 
 function getStage(request, reply) {
   var id = mongojs.ObjectId(request.params.stageId);
@@ -27,8 +38,34 @@ function searchStages(request, reply) {
   });
 }
 
+function getClosestStage(request, reply){
+  var x = parseInt(request.query.x, 10);
+  var y = parseInt(request.query.y, 10);
+  var coordinates = '(x=' + x + ',y=' + y +')';
+  var proposals = request.query.proposals ? parseInt(request.query.proposals, 10):1;
+  var maxdistance = request.query.maxdistance ? parseInt(request.query.maxdistance, 10):3000;
+  var qs = {
+    proposals: proposals,
+    maxdistance: maxdistance,
+    coordinates: coordinates
+  };
+  var url = config.stagesApiUrl + '?' + querystring.stringify(qs);
+  var options = {
+    headers: {
+      'Accept':'application/json'
+    }
+  };
+
+  Wreck.get(url, options, function(err, res, payload){
+    handleReply(err, payload, request, reply);
+  });
+
+}
+
 module.exports.getStage = getStage;
 
 module.exports.getStages = getStages;
 
 module.exports.searchStages = searchStages;
+
+module.exports.getClosestStage = getClosestStage;

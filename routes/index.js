@@ -16,6 +16,14 @@ var routes = [
     method: 'GET',
     path: '/stages/search/{searchText}',
     handler: handlers.searchStages
+  },
+  {
+    method: 'GET',
+    path: '/stages/closest',
+    handler: handlers.getClosestStage,
+    config: {
+      'description':'Get closest stage. Required params: x, y (east, north UTM32). Optional params: maxdistance (default 3000) and proposals (defailt 1)'
+    }
   }
 ];
 
