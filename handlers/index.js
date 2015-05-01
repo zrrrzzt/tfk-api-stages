@@ -49,7 +49,31 @@ function getClosestStage(request, reply){
     maxdistance: maxdistance,
     coordinates: coordinates
   };
-  var url = config.stagesApiUrl + '?' + querystring.stringify(qs);
+  var url = config.stagesApiUrl + '/Place/GetClosestStops' + '?' + querystring.stringify(qs);
+  var options = {
+    headers: {
+      'Accept':'application/json'
+    }
+  };
+
+  Wreck.get(url, options, function(err, res, payload){
+    handleReply(err, payload, request, reply);
+  });
+
+}
+
+function getTravelRoute(request, reply){
+  var fromplace = request.query.fromplace;
+  var toplace = request.query.toplace;
+  var proposals = request.query.proposals ? parseInt(request.query.proposals, 10):1;
+  var isafter = request.query.isafter ? request.query.isafter : new Date().toISOString();
+  var qs = {
+    toplace: toplace,
+    fromplace: fromplace,
+    proposals: proposals,
+    isafter: isafter
+  };
+  var url = config.stagesApiUrl + '/Travel/GetTravels' + '?' + querystring.stringify(qs);
   var options = {
     headers: {
       'Accept':'application/json'
@@ -69,3 +93,5 @@ module.exports.getStages = getStages;
 module.exports.searchStages = searchStages;
 
 module.exports.getClosestStage = getClosestStage;
+
+module.exports.getTravelRoute = getTravelRoute;

@@ -1,7 +1,7 @@
 {
   "name": "tfk-api-stages",
-  "version": "1.1.0",
-  "description": "Forms plugin for tfk API",
+  "version": "1.2.0",
+  "description": "API plugin for stages and travel",
   "author": {
     "name": "Geir Gåsodden",
     "email": "geir.gasodden@pythonia.no",

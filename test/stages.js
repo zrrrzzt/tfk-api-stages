@@ -56,4 +56,14 @@ describe('stages', function() {
     });
   });
 
+  describe('GET /stages/travel', function() {
+    it('responds with json', function(done) {
+      wreck
+        .get('/stages/travel?fromplace=8070200&toplace=8071529')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, done);
+    });
+  });
+
 });

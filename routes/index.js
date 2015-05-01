@@ -22,7 +22,15 @@ var routes = [
     path: '/stages/closest',
     handler: handlers.getClosestStage,
     config: {
-      'description':'Get closest stage. Required params: x, y (east, north UTM32). Optional params: maxdistance (default 3000) and proposals (defailt 1)'
+      'description':'Get closest stage. Required params: x, y (east, north UTM32). Optional params: maxdistance (default 3000) and proposals (default 1)'
+    }
+  },
+  {
+    method: 'GET',
+    path: '/stages/travel',
+    handler: handlers.getTravelRoute,
+    config: {
+      'description':'Get route between 2 stages. Required params: fromplace, toplace. Optional params: proposals (default 1)'
     }
   }
 ];
