@@ -30,7 +30,7 @@ var routes = [
     path: '/stages/travel',
     handler: handlers.getTravelRoute,
     config: {
-      'description':'Get route between 2 stages. Required params: fromplace, toplace. Optional params: proposals (default 1)'
+      'description':'Get route between 2 stages. Required params: fromplace, toplace. Optional params: isafter (true if after time), time (ddmmYYYY) and proposals (default 1)'
     }
   }
 ];
